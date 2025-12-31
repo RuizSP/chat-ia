@@ -1,0 +1,58 @@
+import { useState } from "react"
+import { Chat } from "../components/ui/Chat"
+import { useChatContext } from "../components/ui/Chat/context/useChatContext"
+import useChat from "../hooks/useChat"
+
+import { freeChatapi } from "../services/freeChatApi"
+
+export default function Home() {
+  const { chats, dispatch } = useChatContext()
+
+  const [message, setMessage] = useState<string>("")
+
+  const { useSendMessage } = useChat({ api: freeChatapi, queryKey: ["FREECHAT"] })
+
+  const { mutateAsync: sendMessage, isPending } = useSendMessage()
+
+  async function handleSendMessage(message: string) {
+    if (!message) return
+
+    dispatch({ type: "SEND_MESSAGE", payload: { message } })
+    setMessage("")
+
+    try {
+      const response = await sendMessage({
+        url: "chat",
+        message,
+      })
+      dispatch({ type: "WAITING_RESPONSE" })
+      dispatch({ type: "RECEIVE_MESSAGE", payload: { message: response?.response } })
+    } catch {
+      dispatch({ type: "MESSAGE_ERROR" })
+    }
+  }
+
+  return (
+    <Chat.Root>
+      <Chat.Container>
+        {chats.map(item => (
+          <Chat.SpeechContent
+            key={item.id}
+            type={item?.type}
+            message={item?.message}
+            isLoading={item?.status === "loading"}
+            error={item?.status === "error"}
+          />
+        ))}
+      </Chat.Container>
+      <Chat.Footer>
+        <Chat.TextField
+          isLoading={isPending}
+          onChange={e => setMessage(e.target.value)}
+          onSendMessage={message => handleSendMessage(message)}
+          value={message}
+        />
+      </Chat.Footer>
+    </Chat.Root>
+  )
+}
