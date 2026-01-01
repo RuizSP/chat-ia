@@ -24,7 +24,12 @@ export default function ChatTextField(props: ChatTextFieldProps) {
           sx: { borderRadius: 5 },
           endAdornment: (
             <Stack spacing={1} direction={"row"}>
-              <ChatVoiceListener onSpeechResult={result => onSendMessage(result)} />
+              <ChatVoiceListener
+                onSpeechResult={result => {
+                  console.log("teste" + result)
+                  onSendMessage(result)
+                }}
+              />
               <ChatSendButton onSendMessage={() => onSendMessage(value)} disabled={isLoading} />
             </Stack>
           ),
