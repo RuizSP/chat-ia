@@ -8,9 +8,9 @@ interface ChatVoiceListenerProps {
 
 export default function ChatVoiceListener({ onSpeechResult }: ChatVoiceListenerProps) {
   const { listen, stop, listening } = useSpeechRecognition({
-    onResult: a => {
-      console.log({ a })
-      onSpeechResult?.("")
+    onResult: result => {
+      const text = result[0]?.transcript ?? ""
+      onSpeechResult?.(text)
     },
   })
 
