@@ -2,12 +2,13 @@ import { AccessTime, CopyAll, DoneAll } from "@mui/icons-material"
 import { Card, Divider, IconButton, Stack, Typography } from "@mui/material"
 import { ThreeDotsLoader } from "../ThreeDotsLoader"
 import ChatVoiceButton from "./ChatVoiceButton"
+import ChatMarkdownMessage from "./ChatMarkDownMessage"
+import CopyButton from "../CopyButton"
 
 interface ChatSpeechContentProps {
   isLoading?: boolean
   error?: boolean
   message?: string
-
   type: "Send" | "Receiver"
 }
 
@@ -50,20 +51,16 @@ export default function ChatSpeechContent({
         <ThreeDotsLoader />
       ) : (
         <Stack spacing={1} width="100%" divider={<Divider />}>
-          <Typography color={isReceiver ? "textSecondary" : "textPrimary"} variant="body2">
-            {message}
-          </Typography>
+          <ChatMarkdownMessage isReceiver={isReceiver} markdown={message||''} />
 
           <Stack alignSelf="flex-end">
             {showPending ? (
-              <AccessTime sx={{ scale: 0.8 }} color="disabled" />
+              <AccessTime  color="disabled" />
             ) : (
               <Stack direction="row" spacing={1} justifyContent={"center"} alignItems={"center"}>
                 <ChatVoiceButton message={message || ""} />
 
-                <IconButton title="Copiar" size="small" color="default">
-                  <CopyAll />
-                </IconButton>
+                <CopyButton value={message||''}/>
 
                 <DoneAll color="disabled" />
               </Stack>

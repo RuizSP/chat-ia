@@ -1,6 +1,7 @@
 import { VolumeOff, VolumeUp } from "@mui/icons-material"
 import { IconButton } from "@mui/material"
 import { useSpeechSynthesis } from "react-speech-kit"
+import { markdownToSpeechText } from "../../../utils/markDownToSpeechText"
 
 interface ChatVoiceButtonProps {
   message: string
@@ -13,6 +14,8 @@ export default function ChatVoiceButton(props: ChatVoiceButtonProps) {
   const voices = window.speechSynthesis.getVoices()
   const ptBrVoice = voices.find(v => v.lang === "pt-BR")
 
+  const speechText = markdownToSpeechText(message)
+
   return (
     <>
       {!speaking ? (
@@ -20,7 +23,7 @@ export default function ChatVoiceButton(props: ChatVoiceButtonProps) {
           size="small"
           onClick={() => {
             speak({
-              text: message,
+              text: speechText,
               voice: ptBrVoice,
             })
           }}
