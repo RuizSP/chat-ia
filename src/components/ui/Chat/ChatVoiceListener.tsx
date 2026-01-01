@@ -3,18 +3,25 @@ import { IconButton } from "@mui/material"
 import { useSpeechRecognition } from "react-speech-kit"
 
 interface ChatVoiceListenerProps {
-  onSpeechResult?: () => void
+  onSpeechResult?: (result: string) => void
 }
 
 export default function ChatVoiceListener({ onSpeechResult }: ChatVoiceListenerProps) {
-  const { listen, stop, listening } = useSpeechRecognition({ onResult: onSpeechResult })
+  const { listen, stop, listening } = useSpeechRecognition({
+    onResult: a => {
+      console.log({ a })
+    },
+  })
 
   return (
     <IconButton
-      title={"Segure o botão para falar"}
+      title="Segure o botão para falar"
       color={listening ? "info" : "primary"}
-      onKeyDown={() => listen({ lang: "pt-Br" })}
-      onKeyUp={() => stop()}
+      onMouseDown={() => listen({ lang: "pt-BR" })}
+      onMouseUp={stop}
+      onMouseLeave={stop}
+      onTouchStart={() => listen({ lang: "pt-BR" })}
+      onTouchEnd={stop}
     >
       <Mic />
     </IconButton>
