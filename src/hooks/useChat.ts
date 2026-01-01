@@ -7,23 +7,20 @@ interface FreeChatConfig {
   queryKey: readonly unknown[]
 }
 
-interface SendMessageConfig {
-  message: string
+interface SendMessageConfig<TParams> {
+  params: TParams
   url: string
 }
 
 export default function useChat({ api, queryKey }: FreeChatConfig) {
-  async function sendMessage({ message, url }: SendMessageConfig) {
-    const response = await api.post(url, {
-      message,
-    })
-
+  async function sendMessage<TParams>({ params, url }: SendMessageConfig<TParams>) {
+    const response = await api.post(url, params)
     return response.data
   }
 
-  function useSendMessage() {
-    return useMutation({
-      mutationFn: sendMessage,
+  function useSendMessage<TParams, TResponse = unknown>() {
+    return useMutation<TResponse, unknown, SendMessageConfig<TParams>>({
+      mutationFn: variables => sendMessage<TParams>(variables),
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey })
       },

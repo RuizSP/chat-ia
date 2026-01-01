@@ -1,39 +1,32 @@
-import { Drawer, Toolbar } from "@mui/material"
+import { Box } from "@mui/material"
 
-const drawerWidth = 240
-const miniWidth = 64
+const DRAWER_WIDTH = 240
+const MINI_WIDTH = 64
 
 interface Props {
   open: boolean
 }
 
 export default function SideMenu({ open }: Props) {
+  const width = open ? DRAWER_WIDTH : MINI_WIDTH
+
   return (
-    <Drawer
-      variant="permanent"
-      sx={{
-        width: open ? drawerWidth : miniWidth,
-        transition: theme =>
-          theme.transitions.create("width", {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.standard,
-          }),
+    <Box
+      component="aside"
+      sx={theme => ({
+        width,
+        transition: theme.transitions.create("width", {
+          easing: theme.transitions.easing.sharp,
+          duration: theme.transitions.duration.standard,
+        }),
         flexShrink: 0,
-        whiteSpace: "nowrap",
-        "& .MuiDrawer-paper": {
-          mt: 8.1,
-          overflowX: "hidden",
-          border: "none",
-          width: open ? drawerWidth : miniWidth,
-          transition: theme =>
-            theme.transitions.create("width", {
-              easing: theme.transitions.easing.sharp,
-              duration: theme.transitions.duration.standard,
-            }),
-        },
-      }}
+        overflowX: "hidden",
+        borderRadius: 2,
+        border: "none",
+        bgcolor: theme.palette.background.paper,
+      })}
     >
-      <Toolbar />
-    </Drawer>
+      {/* conteúdo do menu */}
+    </Box>
   )
 }

@@ -1,9 +1,10 @@
-import { AccessTime, CopyAll, DoneAll } from "@mui/icons-material"
-import { Card, Divider, IconButton, Stack, Typography } from "@mui/material"
+import { AccessTime, DoneAll } from "@mui/icons-material"
+import { Card, Divider, Stack, Typography } from "@mui/material"
 import { ThreeDotsLoader } from "../ThreeDotsLoader"
 import ChatVoiceButton from "./ChatVoiceButton"
 import ChatMarkdownMessage from "./ChatMarkDownMessage"
 import CopyButton from "../CopyButton"
+import { markdownToFormattedText } from "../../../utils/markdownToFormattedText"
 
 interface ChatSpeechContentProps {
   isLoading?: boolean
@@ -35,32 +36,41 @@ export default function ChatSpeechContent({
   const showTyping = isLoading && isReceiver
   const showPending = isLoading && !isReceiver
 
+  const formattedText = markdownToFormattedText(message || "")
+
   return (
     <Card
       variant="elevation"
-      elevation={2}
+      elevation={isReceiver ? 5 : 1}
       sx={{
         px: 2,
-        py: 1,
+        py: 1.5,
         display: "flex",
         alignSelf: isReceiver ? "flex-start" : "flex-end",
-        minWidth: "60%",
+        maxWidth: "60%",
+        minWidth: "40%",
+        backgroundColor: isReceiver ? "background.paper" : "primary.dark",
+        color: isReceiver ? "text.primary" : "#E5E7EB",
+        borderBottom: 3,
+        borderTopLeftRadius: isReceiver ? 3 : 12,
+        borderTopRightRadius: isReceiver ? 12 : 3,
+        border: isReceiver ? "1px solid rgba(255,255,255,0.06)" : "none",
       }}
     >
       {showTyping ? (
         <ThreeDotsLoader />
       ) : (
         <Stack spacing={1} width="100%" divider={<Divider />}>
-          <ChatMarkdownMessage isReceiver={isReceiver} markdown={message||''} />
+          <ChatMarkdownMessage isReceiver={isReceiver} markdown={message || ""} />
 
           <Stack alignSelf="flex-end">
             {showPending ? (
-              <AccessTime  color="disabled" />
+              <AccessTime color="disabled" />
             ) : (
               <Stack direction="row" spacing={1} justifyContent={"center"} alignItems={"center"}>
-                <ChatVoiceButton message={message || ""} />
+                <ChatVoiceButton message={formattedText || ""} />
 
-                <CopyButton value={message||''}/>
+                <CopyButton value={formattedText || ""} />
 
                 <DoneAll color="disabled" />
               </Stack>

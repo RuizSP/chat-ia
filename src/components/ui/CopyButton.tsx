@@ -1,26 +1,36 @@
-import { CopyAll } from "@mui/icons-material";
-import { IconButton } from "@mui/material";
+import { CheckCircle, ContentCopy } from "@mui/icons-material"
+import { IconButton, Tooltip } from "@mui/material"
+import { useEffect, useState } from "react"
 
-
-interface CopyButtonProps
-{
-    value:string
+interface CopyButtonProps {
+  value: string
 }
 
-export default function CopyButton(props:CopyButtonProps){
-    const {value} = props
-    
-    const copiarParaClipboard = async () => {
-    try {
-      await navigator.clipboard.writeText(value);
-      alert("Texto copiado!");
-    } catch (err) {
-      console.error("Erro ao copiar:", err);
-    }
-  };
+export default function CopyButton(props: CopyButtonProps) {
+  const { value } = props
+  const [copied, setCopied] = useState<boolean>(false)
 
-    
-    return <IconButton onClick={copiarParaClipboard}>
-        <CopyAll />
-    </IconButton>
+  const copiarParaClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(value)
+      setCopied(true)
+    } catch (err) {
+      console.error("Erro ao copiar:", err)
+    }
+  }
+
+  useEffect(() => {
+    if (!copied) return
+    setTimeout(() => {
+      setCopied(false)
+    }, 2000)
+  }, [copied])
+
+  return (
+    <Tooltip title={copied ? "Texto Copiado com Sucesso!" : undefined}>
+      <IconButton disabled={copied} onClick={copiarParaClipboard}>
+        {copied ? <CheckCircle /> : <ContentCopy />}
+      </IconButton>
+    </Tooltip>
+  )
 }

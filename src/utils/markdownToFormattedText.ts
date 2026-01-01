@@ -3,11 +3,8 @@ import remarkParse from "remark-parse"
 import remarkGfm from "remark-gfm"
 import { visit } from "unist-util-visit"
 
-export function markdownToSpeechText(markdown: string): string {
-  const tree = unified()
-    .use(remarkParse)
-    .use(remarkGfm)
-    .parse(markdown)
+export function markdownToFormattedText(markdown: string): string {
+  const tree = unified().use(remarkParse).use(remarkGfm).parse(markdown)
 
   const parts: string[] = []
 
@@ -15,8 +12,5 @@ export function markdownToSpeechText(markdown: string): string {
     parts.push(node.value)
   })
 
-  return parts
-    .join(" ")
-    .replace(/\s+/g, " ")
-    .trim()
+  return parts.join(" ").replace(/\s+/g, " ").trim()
 }

@@ -8,23 +8,23 @@ interface ChatVoiceListenerProps {
 }
 
 export default function ChatVoiceListener({ onSpeechResult }: ChatVoiceListenerProps) {
-  const speechRef = useRef('')
-  
+  const speechRef = useRef("")
+
   const { listen, stop, listening } = useSpeechRecognition({
-    onResult: (result) => {
+    onResult: result => {
       speechRef.current = result as unknown as string
     },
   })
 
-  function handleStartListen(){
-    speechRef.current=''
-    listen({ lang:'Pt-BR'})
+  function handleStartListen() {
+    speechRef.current = ""
+    listen({ lang: "Pt-BR" })
   }
 
-  function handleStopListem(){
+  function handleStopListem() {
     stop()
     const finalText = speechRef.current.trim()
-    if(!finalText) return
+    if (!finalText) return
 
     onSpeechResult?.(finalText)
   }

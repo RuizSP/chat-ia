@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { Chat } from "../components/ui/Chat"
-import { useChatContext } from "../components/ui/Chat/context/useChatContext"
+import { useChatContext } from "../hooks/useChatContext"
 import useChat from "../hooks/useChat"
 
 import { freeChatapi } from "../services/freeChatApi"
@@ -12,7 +12,10 @@ export default function Home() {
 
   const { useSendMessage } = useChat({ api: freeChatapi, queryKey: ["FREECHAT"] })
 
-  const { mutateAsync: sendMessage, isPending } = useSendMessage()
+  const { mutateAsync: sendMessage, isPending } = useSendMessage<
+    { message: string },
+    { response: string }
+  >()
 
   async function handleSendMessage(message: string) {
     if (!message) return
@@ -23,7 +26,9 @@ export default function Home() {
     try {
       const response = await sendMessage({
         url: "chat",
-        message,
+        params: {
+          message,
+        },
       })
       dispatch({ type: "WAITING_RESPONSE" })
       dispatch({ type: "RECEIVE_MESSAGE", payload: { message: response?.response } })

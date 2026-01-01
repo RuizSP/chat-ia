@@ -1,3 +1,87 @@
+// import { createTheme } from "@mui/material/styles"
+
+// const theme = createTheme({
+//   palette: {
+//     mode: "dark",
+
+//     primary: {
+//       main: "#F8B195",
+//       contrastText: "#355C7D",
+//     },
+
+//     secondary: {
+//       main: "#F67280",
+//       contrastText: "#FFFFFF",
+//     },
+
+//     error: {
+//       main: "#C06C84",
+//     },
+
+//     background: {
+//       default: "#355C7D",
+//       paper: "#6C5B7B",
+//     },
+
+//     text: {
+//       primary: "#353535ff",
+//       secondary: "#353535ff",
+//     },
+
+//     divider: "#C06C84",
+//   },
+
+//   typography: {
+//     fontFamily: '"Roboto", sans-serif',
+//     h1: { color: "#F8B195" },
+//     h2: { color: "#F8B195" },
+//     subtitle1: { color: "#F67280" },
+//   },
+
+//   components: {
+//     MuiTextField: {
+//       defaultProps: {
+//         fullWidth: true,
+//         size: "small",
+//         variant: "standard",
+//       },
+//     },
+
+//     MuiDivider: {
+//       defaultProps: {
+//         variant: "fullWidth",
+//       },
+//     },
+
+//     MuiButton: {
+//       styleOverrides: {
+//         root: {
+//           textTransform: "none",
+//           borderRadius: 8,
+//         },
+//       },
+//     },
+
+//     MuiPaper: {
+//       styleOverrides: {
+//         root: {
+//           backgroundColor: "#6C5B7B",
+//         },
+//       },
+//     },
+
+//     MuiDrawer: {
+//       styleOverrides: {
+//         paper: {
+//           backgroundColor: "#355C7D",
+//         },
+//       },
+//     },
+//   },
+// })
+
+// export default theme
+
 import { createTheme } from "@mui/material/styles"
 
 const theme = createTheme({
@@ -5,37 +89,47 @@ const theme = createTheme({
     mode: "dark",
 
     primary: {
-      main: "#F8B195",
-      contrastText: "#355C7D",
+      main: "#7C9CFF",
+      dark: "#1E3A8A",
+      contrastText: "#0B0F1A",
     },
 
     secondary: {
-      main: "#F67280",
-      contrastText: "#FFFFFF",
+      main: "#8B5CF6",
     },
 
     error: {
-      main: "#C06C84",
+      main: "#EF4444",
     },
 
     background: {
-      default: "#355C7D",
-      paper: "#6C5B7B",
+      default: "#0B0F1A",
+      paper: "#111827",
     },
 
     text: {
-      primary: "#353535ff",
-      secondary: "#353535ff",
+      primary: "#E5E7EB",
+      secondary: "#9CA3AF",
     },
 
-    divider: "#C06C84",
+    divider: "rgba(255,255,255,0.08)",
   },
 
   typography: {
-    fontFamily: '"Roboto", sans-serif',
-    h1: { color: "#F8B195" },
-    h2: { color: "#F8B195" },
-    subtitle1: { color: "#F67280" },
+    fontFamily: '"Inter", "Roboto", sans-serif',
+    h1: {
+      fontWeight: 600,
+    },
+    h2: {
+      fontWeight: 600,
+    },
+    subtitle1: {
+      color: "#9CA3AF",
+    },
+  },
+
+  shape: {
+    borderRadius: 12,
   },
 
   components: {
@@ -43,13 +137,16 @@ const theme = createTheme({
       defaultProps: {
         fullWidth: true,
         size: "small",
-        variant: "standard",
+        variant: "outlined",
       },
     },
 
-    MuiDivider: {
-      defaultProps: {
-        variant: "fullWidth",
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "#0F172A",
+          borderRadius: 12,
+        },
       },
     },
 
@@ -57,7 +154,8 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           textTransform: "none",
-          borderRadius: 8,
+          borderRadius: 12,
+          fontWeight: 500,
         },
       },
     },
@@ -65,7 +163,8 @@ const theme = createTheme({
     MuiPaper: {
       styleOverrides: {
         root: {
-          backgroundColor: "#6C5B7B",
+          backgroundImage: "none",
+          borderRadius: 16,
         },
       },
     },
@@ -73,7 +172,16 @@ const theme = createTheme({
     MuiDrawer: {
       styleOverrides: {
         paper: {
-          backgroundColor: "#355C7D",
+          backgroundColor: "#0F172A",
+          borderRight: "1px solid rgba(255,255,255,0.08)",
+        },
+      },
+    },
+
+    MuiDivider: {
+      styleOverrides: {
+        root: {
+          borderColor: "rgba(255,255,255,0.08)",
         },
       },
     },

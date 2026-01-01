@@ -1,26 +1,24 @@
 import { Menu } from "@mui/icons-material"
-import { IconButton, AppBar as MuiAppBar, Stack, Toolbar, Typography } from "@mui/material"
+import { AppBar as MuiAppBar, IconButton, Stack, Toolbar, Typography } from "@mui/material"
 
 interface AppBarProps {
   onToggle: () => void
 }
 
-export default function AppBar(props: AppBarProps) {
-  const { onToggle } = props
-
+export default function AppBar({ onToggle }: AppBarProps) {
   return (
     <MuiAppBar
-      position="static"
-      sx={theme => ({
-        width: "100%",
-        border: "none",
-        backgroundColor: theme?.palette?.background?.default,
-      })}
+      position="relative"
       variant="outlined"
+      sx={theme => ({
+        border: "none",
+        backgroundColor: theme.palette.background.default,
+        zIndex: theme.zIndex.drawer + 1,
+      })}
     >
       <Toolbar>
-        <Stack direction={"row"} spacing={4}>
-          <IconButton color="primary" onClick={() => onToggle()}>
+        <Stack direction="row" spacing={4}>
+          <IconButton color="primary" onClick={onToggle}>
             <Menu />
           </IconButton>
           <Typography variant="h4">ChatIA</Typography>

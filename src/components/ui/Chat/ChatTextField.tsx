@@ -1,6 +1,7 @@
 import { Stack, TextField } from "@mui/material"
 import ChatVoiceListener from "./ChatVoiceListener"
 import ChatSendButton from "./ChatSendbutton"
+import { useEffect } from "react"
 
 interface ChatTextFieldProps {
   value: string
@@ -11,6 +12,22 @@ interface ChatTextFieldProps {
 
 export default function ChatTextField(props: ChatTextFieldProps) {
   const { onChange, onSendMessage, value, isLoading } = props
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Enter") {
+        if (value) {
+          onSendMessage(value)
+        }
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown)
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown)
+    }
+  }, [value])
 
   return (
     <TextField

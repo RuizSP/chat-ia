@@ -1,5 +1,5 @@
 import { type ReactNode, useReducer } from "react"
-import { ChatContext, chatReducer } from "./context/ChatContext"
+import { ChatContext, chatReducer } from "../../../context/ChatContext"
 
 interface Props {
   children: ReactNode
