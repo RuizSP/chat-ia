@@ -4,8 +4,15 @@ import { useThemeModeContext } from "../../../hooks/useThemeModeContext"
 
 export default function ThemeToggleButton() {
   const { setTheme, themeType } = useThemeModeContext()
+
+  const toggleTheme = () => {
+    const newTheme = themeType === "light" ? "dark" : "light"
+    setTheme(newTheme)
+    localStorage.setItem("theme", newTheme)
+  }
+
   return (
-    <IconButton onClick={() => setTheme(themeType === "light" ? "dark" : "light")}>
+    <IconButton onClick={toggleTheme}>
       {themeType === "light" ? <DarkMode /> : <LightMode />}
     </IconButton>
   )

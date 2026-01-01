@@ -5,7 +5,8 @@ interface Props {
   children: ReactNode
 }
 export function ThemeModeProvider({ children }: Props) {
-  const [theme, setTheme] = useState<ThemeType>("dark")
+  const localTheme = localStorage.getItem("theme") as ThemeType
+  const [theme, setTheme] = useState<ThemeType>(localTheme || "dark")
 
   return (
     <ThemeModeContext.Provider value={{ themeType: theme, setTheme }}>
