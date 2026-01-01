@@ -10,6 +10,7 @@ export default function ChatVoiceListener({ onSpeechResult }: ChatVoiceListenerP
   const { listen, stop, listening } = useSpeechRecognition({
     onResult: a => {
       console.log({ a })
+      onSpeechResult?.("")
     },
   })
 
