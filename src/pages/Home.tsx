@@ -37,6 +37,10 @@ export default function Home() {
     }
   }
 
+  function handleDeleteMessage(id: string) {
+    dispatch({ type: "DELETE_MESSAGE", payload: { id } })
+  }
+
   return (
     <Chat.Root>
       <Chat.Container>
@@ -46,7 +50,10 @@ export default function Home() {
             type={item?.type}
             message={item?.message}
             isLoading={item?.status === "loading"}
-            error={item?.status === "error"}
+            status={item?.status as "deleted" | "error"}
+            onDelete={() => {
+              handleDeleteMessage(item?.id)
+            }}
           />
         ))}
       </Chat.Container>

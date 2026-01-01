@@ -1,13 +1,14 @@
 import { createContext } from "react"
 import { v4 } from "uuid"
 
-export type ChatStatus = "idle" | "loading" | "success" | "error"
+export type ChatStatus = "idle" | "loading" | "success" | "error" | "deleted"
 
 type ChatAction =
   | { type: "SEND_MESSAGE"; payload: { message: string } }
   | { type: "WAITING_RESPONSE" }
   | { type: "RECEIVE_MESSAGE"; payload: { message: string } }
   | { type: "MESSAGE_ERROR" }
+  | { type: "DELETE_MESSAGE"; payload: { id: string } }
 
 export interface ChatModel {
   id: string
@@ -59,6 +60,12 @@ export function chatReducer(state: ChatModel[], action: ChatAction): ChatModel[]
           : chat,
       )
     }
+    case "DELETE_MESSAGE": {
+      return state.map(chat =>
+        chat.id === action.payload.id ? { ...chat, status: "deleted", message: "" } : chat,
+      )
+    }
+
     default:
       return state
   }
