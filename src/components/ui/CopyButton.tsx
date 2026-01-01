@@ -27,7 +27,7 @@ export default function CopyButton(props: CopyButtonProps) {
   }, [copied])
 
   return (
-    <Tooltip title={copied ? "Texto Copiado com Sucesso!" : undefined}>
+    <Tooltip title={copied ? "Texto Copiado com Sucesso!" : "Copiar texto"}>
       <IconButton disabled={copied} onClick={copiarParaClipboard}>
         {copied ? <CheckCircle /> : <ContentCopy />}
       </IconButton>

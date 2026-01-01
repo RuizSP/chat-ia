@@ -2,7 +2,7 @@ import { AccessTime, DoneAll } from "@mui/icons-material"
 import { Card, Divider, Stack, Typography } from "@mui/material"
 import { ThreeDotsLoader } from "../ThreeDotsLoader"
 import ChatVoiceButton from "./ChatVoiceButton"
-import ChatMarkdownMessage from "./ChatMarkDownMessage"
+import ChatMarkdownMessage from "./ChatMarkdownMessage"
 import CopyButton from "../CopyButton"
 import { markdownToFormattedText } from "../../../utils/markdownToFormattedText"
 
@@ -47,7 +47,7 @@ export default function ChatSpeechContent({
         py: 1.5,
         display: "flex",
         alignSelf: isReceiver ? "flex-start" : "flex-end",
-        maxWidth: "60%",
+        maxWidth: "75%",
         minWidth: "40%",
         backgroundColor: isReceiver ? "background.paper" : "primary.dark",
         color: isReceiver ? "text.primary" : "#E5E7EB",

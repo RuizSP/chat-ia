@@ -1,19 +1,19 @@
-import { Box, Typography } from "@mui/material"
+import { Box, Stack, Typography } from "@mui/material"
 import Markdown from "react-markdown"
 import remarkGfm from "remark-gfm"
+import CopyButton from "../CopyButton"
 
 interface ChatMarkdownMessageProps {
   markdown: string
   isReceiver: boolean
 }
 
-export default function ChatMarkdownMessage(props: ChatMarkdownMessageProps) {
-  const { markdown, isReceiver } = props
-
+export default function ChatMarkdownMessage({ markdown, isReceiver }: ChatMarkdownMessageProps) {
   return (
     <Box
       sx={{
         "& pre": {
+          position: "relative",
           backgroundColor: "#0d1117",
           color: "#c9d1d9",
           padding: 1.5,
@@ -50,6 +50,21 @@ export default function ChatMarkdownMessage(props: ChatMarkdownMessageProps) {
               {children}
             </Typography>
           ),
+
+          code: ({ children }) => {
+            const value = String(children).replace(/\n$/, "")
+
+            return (
+              <Stack position="relative">
+                <Stack alignSelf={"flex-end"}>
+                  <CopyButton value={value} />
+                </Stack>
+                <pre>
+                  <code>{value}</code>
+                </pre>
+              </Stack>
+            )
+          },
         }}
       >
         {markdown}
