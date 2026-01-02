@@ -1,5 +1,7 @@
-import { Box, Stack, Typography } from "@mui/material"
+import { Box, Typography } from "@mui/material"
 import Markdown from "react-markdown"
+import { Prism as SyntaxHighlighterPrism } from "react-syntax-highlighter"
+import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism"
 import remarkGfm from "remark-gfm"
 import CopyButton from "../CopyButton"
 
@@ -13,32 +15,12 @@ export default function ChatMarkdownMessage({ markdown, isReceiver }: ChatMarkdo
     <Box
       sx={{
         "& pre": {
-          position: "relative",
-          backgroundColor: "#0d1117",
-          color: "#c9d1d9",
-          padding: 1.5,
           borderRadius: 1,
           overflowX: "auto",
           fontSize: "0.85rem",
         },
-        "& code": {
-          fontFamily: "monospace",
-        },
-        "& h3": {
-          fontSize: "1rem",
-          fontWeight: 600,
-          mt: 1,
-        },
-        "& h4": {
-          fontSize: "0.95rem",
-          fontWeight: 600,
-          mt: 1,
-        },
         "& p": {
           margin: "4px 0",
-        },
-        "& ul": {
-          paddingLeft: 2,
         },
       }}
     >
@@ -51,18 +33,29 @@ export default function ChatMarkdownMessage({ markdown, isReceiver }: ChatMarkdo
             </Typography>
           ),
 
-          code: ({ children }) => {
+          code({ className, children }) {
             const value = String(children).replace(/\n$/, "")
+            const match = /language-(\w+)/.exec(className || "")
 
             return (
-              <Stack position="relative">
-                <Stack alignSelf={"flex-end"}>
+              <Box position="relative">
+                <Box position="absolute" top={8} right={8} zIndex={1}>
                   <CopyButton value={value} />
-                </Stack>
-                <pre>
-                  <code>{value}</code>
-                </pre>
-              </Stack>
+                </Box>
+
+                <SyntaxHighlighterPrism
+                  style={vscDarkPlus}
+                  language={match?.[1] || "text"}
+                  showLineNumbers
+                  wrapLines
+                  customStyle={{
+                    paddingTop: 40,
+                    borderRadius: 8,
+                  }}
+                >
+                  {value}
+                </SyntaxHighlighterPrism>
+              </Box>
             )
           },
         }}

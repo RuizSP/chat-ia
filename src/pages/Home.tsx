@@ -30,9 +30,11 @@ export default function Home() {
           message,
         },
       })
+
       dispatch({ type: "WAITING_RESPONSE" })
       dispatch({ type: "RECEIVE_MESSAGE", payload: { message: response?.response } })
     } catch {
+      dispatch({ type: "WAITING_RESPONSE" })
       dispatch({ type: "MESSAGE_ERROR" })
     }
   }

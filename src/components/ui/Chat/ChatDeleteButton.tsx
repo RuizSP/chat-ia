@@ -13,7 +13,7 @@ export default function ChatDeleteButton(props: ChatDeleteButtonProps) {
   }
 
   return (
-    <IconButton title="Apagar mensagem" color="error" onClick={handleDelete}>
+    <IconButton title="Apagar mensagem" onClick={handleDelete}>
       <Delete />
     </IconButton>
   )

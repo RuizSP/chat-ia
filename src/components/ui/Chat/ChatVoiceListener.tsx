@@ -35,6 +35,8 @@ export default function ChatVoiceListener({ onSpeechResult }: ChatVoiceListenerP
       color={listening ? "info" : "primary"}
       onMouseDown={handleStartListen}
       onMouseUp={handleStopListem}
+      onTouchStart={handleStartListen}
+      onTouchEnd={handleStartListen}
     >
       <Mic />
     </IconButton>
